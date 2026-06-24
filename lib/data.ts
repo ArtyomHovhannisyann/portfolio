@@ -237,7 +237,7 @@ export const mobileProjects = [
     title: "Scan Love App",
     description:
       "Mobile app concept for ScanLove with a polished onboarding flow, relationship-focused interface, and a clean design system prepared from the Figma product screens.",
-    image: "/projects/mobile-scan-love.png",
+    image: "/projects/mobile-scan-love.jpg",
     category: "Mobile",
     technologies: ["React Native", "TypeScript", "Figma", "UI/UX", "Mobile"],
     relatedUrl:
