@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { personalInfo } from "@/lib/data";
 import { smoothEase } from "@/lib/animations";
 import { useContactForm } from "@/hooks/contact-form";
 import { Icon } from "@/components/ui/icon";
@@ -13,8 +12,8 @@ type ContactFormProps = {
 };
 
 export function ContactForm({ inView }: ContactFormProps) {
-  const { form, handleChange, handleSubmit, resetForm, status } =
-    useContactForm(personalInfo.email);
+  const { errorMessage, form, handleChange, handleSubmit, resetForm, status } =
+    useContactForm();
 
   return (
     <motion.div
@@ -28,6 +27,13 @@ export function ContactForm({ inView }: ContactFormProps) {
           <ContactSuccess onReset={resetForm} />
         ) : (
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+            {status === "error" && (
+              <div className="rounded-2xl border border-[var(--color-rose)]/40 bg-[var(--color-rose)]/10 px-4 py-3 text-sm text-[var(--color-rose)]">
+                {errorMessage ||
+                  "Something went wrong while sending your message."}
+              </div>
+            )}
+
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
               <FormField
                 label="Name"

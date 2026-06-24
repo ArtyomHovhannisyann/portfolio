@@ -16,9 +16,10 @@ const emptyForm: ContactFormState = {
   name: "",
 };
 
-export function useContactForm(recipientEmail: string) {
+export function useContactForm() {
   const [form, setForm] = useState<ContactFormState>(emptyForm);
   const [status, setStatus] = useState<ContactFormStatus>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -31,25 +32,46 @@ export function useContactForm(recipientEmail: string) {
   const resetForm = useCallback(() => {
     setForm(emptyForm);
     setStatus("idle");
+    setErrorMessage("");
   }, []);
 
   const handleSubmit = useCallback(
-    (event: FormEvent<HTMLFormElement>) => {
+    async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       setStatus("sending");
+      setErrorMessage("");
 
-      const subject = encodeURIComponent(`Portfolio Contact from ${form.name}`);
-      const body = encodeURIComponent(
-        `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`,
-      );
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        });
 
-      window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
-      window.setTimeout(() => setStatus("sent"), 500);
+        if (!response.ok) {
+          const data = await response.json().catch(() => null);
+          throw new Error(data?.error || "Unable to send the message.");
+        }
+
+        setStatus("sent");
+        setForm(emptyForm);
+      } catch (error) {
+        console.error(error);
+        setStatus("error");
+        setErrorMessage(
+          error instanceof Error
+            ? error.message
+            : "Something went wrong. Please try again later.",
+        );
+      }
     },
-    [form, recipientEmail],
+    [form],
   );
 
   return {
+    errorMessage,
     form,
     handleChange,
     handleSubmit,
