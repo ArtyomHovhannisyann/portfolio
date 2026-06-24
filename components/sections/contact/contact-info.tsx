@@ -15,11 +15,11 @@ export function ContactInfo({ inView }: ContactInfoProps) {
   return (
     <motion.div
       animate={inView ? { opacity: 1, x: 0 } : {}}
-      className="flex flex-col gap-6 lg:col-span-2"
+      className="flex flex-col gap-6 lg:col-span-2 h-full"
       initial={{ opacity: 0, x: -30 }}
       transition={{ delay: 0.15, duration: 0.7, ease: smoothEase }}
     >
-      <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+      <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 h-full">
         <h3 className="mb-4 text-base font-semibold text-white">
           Get in Touch
         </h3>
