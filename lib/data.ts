@@ -232,6 +232,18 @@ export const mobileProjects = [
     relatedUrl: "https://stonemarket.am",
     featured: false,
   },
+  {
+    id: 106,
+    title: "Scan Love App",
+    description:
+      "Mobile app concept for ScanLove with a polished onboarding flow, relationship-focused interface, and a clean design system prepared from the Figma product screens.",
+    image: "/projects/mobile-scan-love.png",
+    category: "Mobile",
+    technologies: ["React Native", "TypeScript", "Figma", "UI/UX", "Mobile"],
+    relatedUrl:
+      "https://www.figma.com/design/jg5iCz2KtPVy80ouMs1lZM/ScanLove?node-id=0-1&t=0wvfI8HsA8r0fORV-1",
+    featured: false,
+  },
 ];
 
 export const certificates = [
